@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+.popup-wraper {
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    height: 100vh;
+    left: 0%;
+    position: fixed;
+    top: 0%;
+    width: 100vw;
+    z-index: 4;
+}
+
+.popup {
+    background-color: white;
+    border-radius: 25px;
+    margin: 10% auto;
+    max-width: 25%;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.popup-close {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+}
+
+.popup-title {
+    font-weight: bold;
+}
+
+.popup-paragraph {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
