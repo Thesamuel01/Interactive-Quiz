@@ -7,7 +7,6 @@
     const buttonForm = document.querySelector('button');
     const inputs = document.querySelectorAll('input')
 
-    let counter = 0;
     let shouldReloadPage = false;
     let score = 0;
 
@@ -16,7 +15,7 @@
             highlight: 'highlight-right-answer',
             textColor: 'text-success'
         };
-    
+
         const wrongAnswer = {
             highlight: 'highlight-wrong-answer',
             textColor: 'text-danger'
@@ -28,19 +27,22 @@
     };
 
     const highlightCheckedInputs = (inputs) => {
-        inputs.forEach( input => {
+        let correctAnswersIndex = 0;
+
+        inputs.forEach(input => {
             const isInputChecked = input.checked;
 
             if (!isInputChecked) {
                 return;
             };
-    
+
             const inputLabel = input.parentElement;
             const inputDiv = inputLabel.parentElement;
             const userAnswer = input.value;
-            
-            const { highlight, textColor } = getUserAnswerFeedback(userAnswer, counter++);
-    
+
+            const { highlight, textColor } =
+                getUserAnswerFeedback(userAnswer, correctAnswersIndex++);
+
             inputDiv.classList.add(highlight);
             inputLabel.classList.add(textColor);
             inputLabel.classList.remove('text-dark');
@@ -51,20 +53,12 @@
         inputs.forEach(input => input.disabled = true);
     };
 
-    const getUserAnswers = () => {
-        let userAnswers = [];
-
-        correctAnswers.forEach((_, index) => {
-            const userAnswer = form[`inputQuestion${index + 1}`];
-            userAnswers.push(userAnswer);
-        })
-
-        return userAnswers;
-    };
+    const getUserAnswers = () => correctAnswers.map((_, index) =>
+        form[`inputQuestion${index + 1}`].value);
 
     const calculateScore = userAnswers => {
         userAnswers.forEach((userAnswer, index) => {
-            const isUserAnswerCorrect = userAnswer.value === correctAnswers[index];
+            const isUserAnswerCorrect = userAnswer === correctAnswers[index];
 
             if (isUserAnswerCorrect) {
                 score += 1;
@@ -101,9 +95,7 @@
             className: 'text-danger'
         };
 
-        const isAGoodScore = score >= 4;
-
-        return isAGoodScore ? goodScoreMessage : badScoreMessage;
+        return score >= 4 ? goodScoreMessage : badScoreMessage;
     };
 
     const releaseReloadPage = () => {
